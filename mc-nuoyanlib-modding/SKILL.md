@@ -37,6 +37,8 @@ description: 使用一般项目模板创建基于 nuoyanlib 的网易基岩版 M
 - 终端使用 `pwsh`。运行时代码使用 Python 2.7；建项、清理和验证等开发脚本可以使用 Python 3。
 - 客户端和服务端分别通过 `nuoyanlib.client` / `nuoyanlib.server` 入口导入为 `nyl`，优先调用 `nyl.<func_name>`。两侧入口已包含通用接口 `nuoyanlib.common` 。
 - 功能放入 `modules/<功能>/`，以 `modules/__template/` 作为模板，在 `common/constant` 的 `ClientModule` 和 `ServerModule` 中注册模块。
+- 命名空间统一使用： `nuoyan`
+- 模组文件需统一放入以项目名称命名的子目录内，如 `entities/project_name/`
 
 ## 完成与验证
 

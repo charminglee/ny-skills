@@ -1,0 +1,13 @@
+interface:
+  display_name: "Cobblemon Pokemon Modeling"
+  short_description: "Build Cobblemon models and textures with Blockbench MCP"
+  default_prompt: "Use $cobblemon-pokemon-modeling with Blockbench MCP to create or review a Cobblemon-style Pokemon model and texture set."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "bbmcp"
+      description: "Blockbench MCP server used to inspect, edit, preview, and export the active model project"
+
+policy:
+  allow_implicit_invocation: true

@@ -9,10 +9,6 @@ description: 使用一般项目模板创建基于 nuoyanlib 的网易基岩版 M
 
 制作或修改模组前，先读取并遵守同仓库的 [mc-netease-modding](../mc-netease-modding/SKILL.md)，将其作为模组制作约束。该技能负责架构扫描、引用链分析、端侧边界、事件监听、API 检索和改后验证；本技能补充 nuoyanlib 的具体工作方式，不重复维护这些规则。
 
-- 同时读取目标项目的 `AGENTS.md`，保留用户已有修改；明确的用户指令优先于技能中的通用建议。
-- 引用技能不在相邻目录时，在当前可用技能中查找同名技能并读取真实文件；缺失时说明缺失项，不声称已经遵守。
-- 发现该技能要求的扫描或检索工具不可用时，如实说明尚未完成的检查，不将手工浏览描述为工具验证，也不跳过其业务代码门控。
-
 ## 按任务读取参考
 
 | 当前任务 | 读取内容 |
@@ -45,6 +41,10 @@ description: 使用一般项目模板创建基于 nuoyanlib 的网易基岩版 M
 1. 读取 [mcdk-mcp-game-testing-workflow](../mcdk-mcp-game-testing-workflow/SKILL.md)
 2. 通过 [mcdk](E:\MCMod\Tools\mcdk.exe) 启动游戏，将工作目录设为模组根目录。
 3. 遵循 mcdk-mcp-game-testing-workflow 的工作流完成测试，验收结果并汇报。
+
+禁止：
+
+- 编写或运行任何外部测试脚本。
 
 ## 完成与验证
 

@@ -40,6 +40,12 @@ description: 使用一般项目模板创建基于 nuoyanlib 的网易基岩版 M
 - 命名空间统一使用： `nuoyan`
 - 模组文件需统一放入以项目名称命名的子目录内，如 `entities/project_name/`
 
+## 测试
+
+1. 读取 [mcdk-mcp-game-testing-workflow](../mcdk-mcp-game-testing-workflow/SKILL.md)
+2. 通过 [mcdk](E:\MCMod\Tools\mcdk.exe) 启动游戏，将工作目录设为模组根目录。
+3. 遵循 mcdk-mcp-game-testing-workflow 的工作流完成测试，验收结果并汇报。
+
 ## 完成与验证
 
 先完成被引用技能要求的扫描、API 确认和改后检查，再验证实际产物：名称与脚本包路径一致、manifest UUID 有效且独立、模板占位符替换完毕、库与入口同级、模块路径可定位、UI 定义与装饰器对应。

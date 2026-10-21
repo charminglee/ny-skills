@@ -1,6 +1,6 @@
 ---
 name: mc-nuoyanlib-modding
-description: 使用一般项目模板创建基于 nuoyanlib 的网易基岩版 MC 模组、安装库源码，并开发功能模块、双端通信和 NyUI。以 mc-netease-modding 作为模组制作约束；适用于网易我的世界 Python 2.7 ModSDK 项目。
+description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，并开发功能模块。以 mc-netease-modding 作为模组制作约束；适用于网易我的世界 Python 2.7 ModSDK 项目。
 ---
 
 # 基于 nuoyanlib 制作网易 MC 模组
@@ -9,45 +9,48 @@ description: 使用一般项目模板创建基于 nuoyanlib 的网易基岩版 M
 
 制作或修改模组前，先读取并遵守同仓库的 [mc-netease-modding](../mc-netease-modding/SKILL.md)，将其作为模组制作约束。该技能负责架构扫描、引用链分析、端侧边界、事件监听、API 检索和改后验证；本技能补充 nuoyanlib 的具体工作方式，不重复维护这些规则。
 
-## 按任务读取参考
+## 新建项目
 
-| 当前任务 | 读取内容 |
-| --- | --- |
-| 从模板创建项目、设置名称和 UUID、安装 nuoyanlib | [建项与安装](references/project-setup.md)；支持 [非交互建项脚本](scripts/create_mod.py) |
-| 新增功能模块、注册加载路径、事件和通信、开发 NyUI | nuoyanlib 内 `AGENTS.md` |
+### 先确认两个名称
 
-不必为一次任务读完所有参考。已有项目直接检查实际入口和当前内置库的实现，再进入所需开发流程。
+| 参数 | 示例 | 实际用途 |
+| --- | --- | --- |
+| 模组名称 | `CloudFlight` | `MOD_NAME` ，小写后形成 `cloudflight_scripts` |
+| 项目根目录 | `E:\MCMod\Mod\MyProject\模组名称` | 包含 Git 仓库、源代码、开发脚本、资源的工作区 |
+
+### 项目创建步骤
+
+1. 完整复制 [模板](E:\MCMod\Mod\模板) 到项目根目录。
+2. 使用本机 Python 3 运行 [`setup.py`](scripts/setup.py) ，并传入项目根目录，如：
+  ```powershell
+  py -3 setup.py "E:\MCMod\Mod\MyProject\CloudFlight"
+  ```
 
 ## 参考资料
 
 | 用途 | 默认位置 |
 | --- | --- |
-| 项目模板 | `E:\MCMod\Mod\模板\一般项目` |
-| 官方行为包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\behavior_packs\vanilla` |
-| 官方资源包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\resource_packs\vanilla` |
-| 官方着色器包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\3.10.0.420447\data\shaders` |
-| 网易开发者文档 | https://mc.163.com/dev/mcmanual/mc-dev/ |
+| 原版行为包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\behavior_packs\vanilla` |
+| 原版资源包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\resource_packs\vanilla` |
+| 原版着色器包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\3.10.0.420447\data\shaders` |
+| 网易开发文档 | https://mc.163.com/dev/mcmanual/mc-dev/ |
+| 网易模组 Demo | `E:\MCMod\Demo` |
 
 ## 开发约定
 
-- 终端使用 `pwsh`。运行时代码使用 Python 2.7；建项、清理和验证等开发脚本可以使用 Python 3。
+- 行为包 `bp` 内代码必须使用 Python 2.7 语法，禁用 Python 3 语法；建项、清理和验证等开发脚本可以使用 Python 3 。
 - 客户端和服务端分别通过 `nuoyanlib.client` / `nuoyanlib.server` 入口导入为 `nyl`，优先调用 `nyl.<func_name>`。两侧入口已包含通用接口 `nuoyanlib.common` 。
-- 功能放入 `modules/<功能>/`，以 `modules/__template/` 作为模板，在 `common/constant` 的 `ClientModule` 和 `ServerModule` 中注册模块。
-- 命名空间统一使用： `nuoyan`
-- 模组文件需统一放入以项目名称命名的子目录内，如 `entities/project_name/`
+- 功能放入 `modules/<功能>/`；创建新功能模块时，完整复制 `modules/__template/` 作为模板，然后在 `common/constant.py` 的 `ClientModule` / `ServerModule` 中注册模块。
+- 方块、实体、物品、粒子、配方、结构特征等 json 的命名空间统一使用： `nuoyan` 。
+- 行为包/资源包内 json 文件、资源文件需统一放入以项目名称命名的子目录内，如 `bp/entities/cloud_flight/` 。
+- 行为包/资源包下的目录名有特定含义，不得随意命名，网易版部分命名与原版不同，具体以 Demo 为准。
 
 ## 测试
 
-1. 读取 [mcdk-mcp-game-testing-workflow](../mcdk-mcp-game-testing-workflow/SKILL.md)
-2. 通过 [mcdk](E:\MCMod\Tools\mcdk.exe) 启动游戏，将工作目录设为模组根目录。
+1. 读取 [mcdk-mcp-game-testing-workflow](../mcdk-mcp-game-testing-workflow/SKILL.md) 。
+2. 通过 [mcdk](E:\MCMod\Tools\mcdk.exe) 启动游戏，将工作目录设为项目根目录。
 3. 遵循 mcdk-mcp-game-testing-workflow 的工作流完成测试，验收结果并汇报。
 
 禁止：
 
 - 编写或运行任何外部测试脚本。
-
-## 完成与验证
-
-先完成被引用技能要求的扫描、API 确认和改后检查，再验证实际产物：名称与脚本包路径一致、manifest UUID 有效且独立、模板占位符替换完毕、库与入口同级、模块路径可定位、UI 定义与装饰器对应。
-
-静态编译使用 Python 2.7，开发脚本使用 Python 3。普通解释器不能证明 ModSDK 行为；游戏内验证应记录客户端与服务端的加载、事件、通信或 UI 结果，未运行游戏时明确说明验证范围。

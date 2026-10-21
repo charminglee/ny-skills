@@ -1,13 +1,9 @@
 ---
 name: mc-nuoyanlib-modding
-description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，并开发功能模块。以 mc-netease-modding 作为模组制作约束；适用于网易我的世界 Python 2.7 ModSDK 项目。
+description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，并开发功能模块。适用于网易我的世界 Python 2.7 ModSDK 项目。
 ---
 
 # 基于 nuoyanlib 制作网易 MC 模组
-
-## 先加载模组制作约束
-
-制作或修改模组前，先读取并遵守同仓库的 [mc-netease-modding](../mc-netease-modding/SKILL.md)，将其作为模组制作约束。该技能负责架构扫描、引用链分析、端侧边界、事件监听、API 检索和改后验证；本技能补充 nuoyanlib 的具体工作方式，不重复维护这些规则。
 
 ## 新建项目
 
@@ -44,6 +40,11 @@ description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，�
 - 方块、实体、物品、粒子、配方、结构特征等 json 的命名空间统一使用： `nuoyan` 。
 - 行为包/资源包内 json 文件、资源文件需统一放入以项目名称命名的子目录内，如 `bp/entities/cloud_flight/` 。
 - 行为包/资源包下的目录名有特定含义，不得随意命名，网易版部分命名与原版不同，具体以 Demo 为准。
+- 事件参数获取使用 `args.arg_name` 而不是 `args['arg_name']` 。
+
+禁止：
+
+- 使用 unicode 字符串。
 
 ## 测试
 

@@ -28,7 +28,10 @@ description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，�
 | --- | --- |
 | 原版行为包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\behavior_packs\vanilla` |
 | 原版资源包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\resource_packs\vanilla` |
-| 原版着色器包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\3.10.0.420447\data\shaders` |
+| 原版着色器包 | `S:\MCStudioDownload\game\MinecraftPE_Netease\<version>\data\shaders` |
+| 我的世界基岩版开发文档 | https://learn.microsoft.com/zh-cn/minecraft/creator/ |
+| Bedrock Wiki | https://wiki.bedrock.dev/ |
+| JSON UI 参考文档 | https://mcbeui.netlify.app/ |
 | 网易开发文档 | https://mc.163.com/dev/mcmanual/mc-dev/ |
 | 网易模组 Demo | `E:\MCMod\Demo` |
 

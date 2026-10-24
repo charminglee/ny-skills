@@ -1,0 +1,4 @@
+interface:
+  display_name: "异环角色模型模组"
+  short_description: "修改 Blender 中的异环角色模型，保留原版引用并仅打包修改资源到 Backups"
+  default_prompt: "使用 $nte-character-model-mod 修改 Blender 当前打开的异环角色模型，按原版引用验证并将最小资源三件套交付到 E:/NteMod/Backups。"

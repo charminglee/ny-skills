@@ -44,10 +44,11 @@ description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，�
 - 行为包/资源包内 json 文件、资源文件需统一放入以项目名称命名的子目录内，如 `bp/entities/cloud_flight/` 。
 - 行为包/资源包下的目录名有特定含义，不得随意命名，网易版部分命名与原版不同，具体以 Demo 为准。
 - 事件参数获取使用 `args.arg_name` 而不是 `args['arg_name']` 。
+- 所有 json 需格式化输出，使用 4 个空格缩进。
 
 禁止：
 
-- 使用 unicode 字符串。
+- 在 Python 代码中使用 unicode 字符串。
 
 ## 测试
 

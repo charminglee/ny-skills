@@ -9,7 +9,7 @@ description: 异环 (Neverness to Everness / NTE, UE5.6) 皮肤战斗特效替�
 - **A. 分析**：弄清某个已安装特效模组的原理（改了哪些资源、怎么生效的）。
 - **B. 制作**：以某套皮肤为特效源，生成覆盖其他皮肤的模组。
 
-两者共享步骤 1（侦察提取）。全程已验证三轮完整实现（安魂曲分析 + 黑羽制作 + 伊洛伊制作），工具脚本在 `scripts/`，格式细节与环境坑见 `references/`——**动手前先读一遍 references/format-notes.md 的"导入链"和"踩过的坑"两节**，能避开全部已知失败模式。
+两者共享步骤 1（侦察提取）。全程已验证三轮完整实现（安魂曲分析 + 黑羽制作 + 伊洛伊制作），工具脚本在 `scripts`，格式细节与环境坑见 `references/`——**动手前先读一遍 references/format-notes.md 的"导入链"和"踩过的坑"两节**，能避开全部已知失败模式。
 
 ## 环境速查（详见 nte-modding skill）
 
@@ -35,7 +35,7 @@ description: 异环 (Neverness to Everness / NTE, UE5.6) 皮肤战斗特效替�
 
 1. `retoc info / unpack` 模组三件套（模组不加密，无需 AES）看包含哪些包；对包路径与游戏约定对照，形成假设。
 2. 读模组资源：把 `global.ucas+global.utoc`（从 PatchPaks 取）与模组三件套放一个临时目录，`retoc to-legacy --version UE5_6 --no-shaders` 即可转换（不需要 AES）。
-3. 提取**原版**同名资源做对比：用 `scripts/make_scan_dir.py` 建全容器扫描目录，`retoc -a <KEY> to-legacy --filter <关键词>` 提取，`scripts/bnames.py` + 集合 diff 对比引用增删。
+3. 提取 **原版**同名资源做对比：用 `scripts/make_scan_dir.py` 建全容器扫描目录，`retoc -a <KEY> to-legacy --filter <关键词>` 提取，`scripts/bnames.py` + 集合 diff 对比引用增删。
 4. 报告机制：典型结论形如"模组 X 把各皮肤 MeshAsset 的战斗特效属性重定向到 Y 皮肤的特效集 + 覆盖了大招序列（剥离了源皮肤专属动画/后处理）"。引用集合"零删除纯新增"= 属性重定向的标志。
 
 ## 任务 B：制作特效替换模组

@@ -89,15 +89,8 @@ retoc 0.1.5 所用的常见 0x90 字节 header 中，以下字段是 little-endi
 
 ### 5. 只在副本上做最小修复
 
-1. 创建独立输出，例如：
-
-   ```text
-   <源目录名>_FModel修复\
-     IoStore_修复\
-     FModel\
-   ```
-
-2. 将原文件组完整复制到 `IoStore_修复`，保留文件名和 `.pak/.ucas/.utoc` 配对。
+1. 创建独立输出目录，例如：`<源目录名>_FModel修复`
+2. 将原文件组完整复制到输出目录，保留文件名和 `.pak/.ucas/.utoc` 配对。
 3. 只改经上述解析确认的目录 entry count `u32`；写入长度相同的字节，保留 `.utoc` 其它所有字节不变。
 4. 对修复副本重新运行 `retoc info`、`retoc list --path --size` 和 `retoc verify`。三项必须都成功，且 list 应给出合理的 NTE 包路径、chunk 数量和尺寸。
 5. 对比副本中的 `.pak` 与 `.ucas` SHA-256，确认它们与源文件逐字节相同；源目录所有文件 hash 应保持不变。
@@ -132,8 +125,7 @@ repak list <输出.pak>
 
 ### 7. 交付与说明
 
-- `IoStore_修复`：保留完整的修复后 `.pak/.ucas/.utoc` 文件组，供支持 IoStore 的工具使用。
-- `FModel`：放转换得到的 legacy `.pak`，明确告诉用户应加载这个文件，而非只有 347 字节、0 条目的占位 `.pak`。
+- 保留完整的修复后 `.pak/.ucas/.utoc` 文件组。
 - 保留源目录不动，报告修复字段、验证命令结果、转换资产数、legacy `.pak` 条目数和输出位置。
 - 若没有实际启动并打开 FModel，不要声称 UI 已验证；应说明验证到 `retoc/repak` 层，并给出 FModel 中需加载的准确文件。
 - 不在未获授权时将输出直接复制到游戏 `Paks/~mods`，也不覆盖现有模组。

@@ -8,7 +8,14 @@ description: 异环（Neverness to Everness / NTE，国服，虚幻引擎 5.6）
 本 skill 是异环模组制作的环境基准和通用流程。专项任务优先用对应 skill：
 - 皮肤战斗特效替换 → **nte-vfx-swap**（其环境速查与踩坑清单源自本 skill 的原始版本）
 - FModel 灰色/看不到资源、retoc 读 .utoc 报错 → **nte-fmodel-iostore-repair**
-- 其余（UI、模型、贴图、材质、通用解包打包）→ 本 skill
+- Blender 角色模型修改与源文件交付 → **nte-character-model-mod**
+- 其余（UI、贴图、材质、通用解包打包）→ 本 skill
+
+## 虚幻编辑器操作由用户手动完成
+
+虚幻编辑器内的导入、烘焙、打包和验证由用户手动完成。不要启动或操作编辑器，也不要通过 UE MCP、Python、命令行或 Commandlet 代行这些步骤。需要这些步骤的结果时，先交付当前源文件、修改清单和已查明的原版引用；等待用户提供产物后，再继续依赖这些产物的流程。
+
+retoc 解包、打包、容器校验以及离线蓝图字节码检查继续保留；这些流程不要求代用户操作虚幻编辑器。
 
 ## 环境速查
 

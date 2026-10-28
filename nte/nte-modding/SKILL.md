@@ -59,11 +59,36 @@ KEY=0x370E80AA7DCA90A938A4D85013C5A16129AB3079902532B3325CA5B72B740FC7
 3. **编辑**：
    - 单点、临时改动：UAssetGUI 手改属性。
    - 成批或重复性改动：写 Python 脚本改导入表/属性。可复用的包编辑器在 `E:\NteMod\.agents\skills\nte-vfx-swap\scripts\uepkg.py`（已字节级 roundtrip 验证）。**改导入表前先读** `E:\NteMod\.agents\skills\nte-vfx-swap\references\format-notes.md`——尤其"不要追加导入"（会炸 retoc zen 往返）。
+   - 修改蓝图／UFunction 字节码，或调整影响脚本引用的名字表、导入导出映射时，必须执行下文的**完整字节码检查**；打包后的往返产物也要重查。
 4. **组织源码树**：放在项目内 `Scripts/<项目名>/work/out/HT/Content/...`，镜像游戏内路径——**必须带 `HT/` 层级**，否则 to-zen 出来的容器路径是 `../../../Content/...`，挂载后对不上游戏里的 `HT/Content/...`（实测踩过）。**不要导出到 `Projects/`**（2026-10-06 用户砍掉该环节；Projects 现在只存用户自己的 UE 工程与 Template 结构模板——Template 含 Characters/Player/<NNN_角色> 与 UI/UI、UI_Icon/AvatarImage 等常见覆盖位，是 `Content/` 开头，仅作结构参考）。只放要覆盖的文件，别放整个目录。
 5. **打包**：`to-zen --version UE5_6 <项目>/work/out "E:\NteMod\Backups\<角色名-类型-名称>\<角色名-类型-名称>_P.utoc"`（输入即含 `HT/Content` 的目录本身，输出直接落 Backups，中文名），然后 `verify`。
 6. **备份与交付**：交付物统一保存在 `E:\NteMod\Backups\<角色名-类型-名称>\`（中文命名，如 `黑羽-UI-动态觉醒立绘\黑羽-UI-动态觉醒立绘_P.utoc/.ucas/.pak`，容器三件套与目录同名 + `_P` 后缀；可附 README.txt 记录版本、目标游戏版本、兼容性与重建流水线）。**交付到此为止**——不导出 Projects、不做对外发布包（2026-10-06 用户已砍掉两个环节，`E:\NteMod\Release\` 里是历史产物，不再新增）。
    - **不要自动装进 `~mods`**——仅当用户明确要求安装时才复制到 `...\HT\Content\Paks\~mods\`。与覆盖同资源的其他模组互斥；游戏热更改动这些资源后需重建。
 7. **验证边界**：retoc 层 verify 通过 ≠ 游戏内实测。没真进游戏就明说"游戏运行时验证未做"，别宣称已验证。
+
+## 蓝图／UFunction 完整字节码检查
+
+适用于直接增删、改写 cooked Kismet 字节码，以及改变脚本所用名字或对象索引映射的任务。仅修改贴图等不涉及脚本的任务，不要求运行字节码检查。
+
+**按引擎的真实序列化规则读取完整函数，不能只比对补丁字节数。** 核对当前引擎的 `Engine/Source/Runtime/CoreUObject/Public/UObject/ScriptSerialization.h`（指令序列化）和 `Engine/Source/Runtime/Core/Public/UObject/NameTypes.h`（`FScriptName` 布局）。磁盘尺寸与 VM 内存尺寸必须分别计算：
+
+| 数据 | 本机 UE5.6 legacy 磁盘表示 | VM 内存表示 |
+| --- | --- | --- |
+| 脚本指令中的名字，如 `EX_NameConst` 的操作数 | `FName`，8 字节 | `FScriptName`，**12 字节**，不因构建配置改变 |
+| 对象／函数引用 | `FPackageIndex`，4 字节 | `ScriptPointerType`，本机 64 位为 8 字节 |
+| 字段引用 | `FFieldPath` 路径、名字和 owner，长度可变 | 字段指针，本机为 8 字节；路径内部的名字不能再按独立 `FScriptName` 累加 |
+
+解析器应逐指令消费磁盘数据并累计 VM 长度，由解析结果生成函数的 `ScriptBytecodeSize`、磁盘脚本长度和 `Context` 等跳距。**不能拿磁盘增量替代 VM 增量，也不能手填未经解析验证的长度常数。** 插入指令后，所有受影响的 VM 跳转、执行流目标以及事件传给 Ubergraph 的入口偏移都需重新核对。
+
+交付前必须完成：
+
+1. **原版基线**：先让解析器通过原包所有有脚本的完整函数，确认磁盘读取长度、声明的 VM 长度和函数终止边界一致。原版未通过时先修解析器，不以猜测布局继续改包。
+2. **完整读取**：修改包中所有有脚本的函数都要读到 `EX_EndOfScript`，核对磁盘脚本区恰好耗尽、累计 VM 长度等于声明值、函数后续元数据没有被吞入或留下未消费的脚本字节。空脚本按其零长度处理。
+3. **引用与边界**：检查名字表索引、对象／函数导入导出索引及字段 owner 索引是否合法；按可取得的类／结构信息核对字段路径。核对参数及容器终止标记、每个 `Context` 跳距与其完整上下文表达式的 VM 长度，以及静态分支目标是否落在合法指令边界或规定的结束位置。动态目标和缺少类型信息的字段必须说明检查边界。
+4. **拒绝不完整解析**：出现未知 opcode、解析停滞、越界、长度不符或错误跳距时，不能跳过后标为通过；补齐当前任务所需指令的真实读取规则，再验证。只列出几个函数名、FModel 能读取包、`retoc verify` 或容器往返通过，都不能替代此检查。
+5. **回归与往返**：检查修改前后范围，保留原本应保留的调用；针对已修复的序列化错误，用旧错误样本确认检查会失败、修复样本确认通过。完成 Zen→Legacy 往返后，对成品中解回来的脚本再次运行同一完整检查，并保留报告。容器校验、字节码检查和游戏实测分别报告。
+
+已发生的故障：残虹 E 技能模组将 `FScriptName` 错按 8 字节计算，导致新增 `Context` 跳距写成 24（应为 28），`OnRemoveEvent` 的 VM 总长写成 131（应为 135）。容器及解包往返均通过，但游戏加载该蓝图时触发 `ObjectSerializationError ... OnRemoveEvent: Bad export index 541191/10`。修复要同时纠正跳距和 VM 总长，不能因崩溃报了“索引错误”就只修改导入导出表；上述数字仅用于该故障回归，不是其他函数的固定值。
 
 ## UAssetGUI 注意
 

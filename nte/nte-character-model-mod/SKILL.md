@@ -49,6 +49,8 @@ description: 使用 Blender 修改用户已打开的异环（NTE）原版角色�
 
 模型与 FBX 的常见问题，以及用户提供现有产物后可用的离线引用修复方式，按需阅读 [模型与 FBX 记录](references/model-fbx-notes.md)。
 
+身体、脸部或发梢描边变淡时，先读 [描边顶点色参考](references/outline-vertex-colors.md)。已核实原版 COL0 基线后，可在 Blender 文本编辑器运行 [一键恢复脚本](scripts/fix_outline_vertex_colors.py)，选择原版与目标网格，按材质槽、位置和全部 UV 恢复可靠匹配的 RGBA；脚本保留旧网格和未匹配数据，生成诊断报告。详细输入约束、恢复方法及 LINEAR 导出要求见参考中的“一键脚本”章节。
+
 ### 5. 用户提供烘焙产物后，用修改白名单暂存
 
 确认用户提供的产物对应本次源文件后再继续；产物版本或来源不明时先询问用户，不自行生成或替换。

@@ -40,6 +40,7 @@ description: 使用 Blender 修改用户已打开的异环（NTE）原版角色�
 - 常用选项：`use_mesh_modifiers=False`、`add_leaf_bones=False`、`bake_anim=False`、`use_armature_deform_only=False`。轴向沿用原版可用配置；在 Blender/FBX 侧核对尺寸、参考姿态与权重，尺寸统一换算到厘米。
 - 导出时可使用 `Armature` 容器名；只改容器，不改真实骨骼的名称和父子关系。
 - 保留原版材质槽顺序与槽名，随源文件提供每个槽对应的原版材质对象路径。**槽名、Blender 材质名、游戏材质资产路径是三件事。**骨架、物理资产的原版引用也随基线交付；未知项不得用猜测路径填补。
+- 导出时顶点颜色空间必须使用线性。
 
 ### 4. 交付源文件与修改清单
 

@@ -5,6 +5,11 @@
 | 用途 | 路径或值 |
 | --- | --- |
 | 工作区 | `E:/PbzMod` |
+| 固定打包入口 | `E:/PbzMod/Packer/Pack.ps1` |
+| 打包脚本运行时 | 系统 `pwsh`（PowerShell 7），不复制到 Packer |
+| 打包器 CUE4Parse | `E:/PbzMod/Packer/lib/cue`（含预编译助手） |
+| 打包器 usmap | `E:/PbzMod/Packer/mappings/PBZ.usmap` |
+| 打包器 retoc / 封装器 | `E:/PbzMod/Packer/bin/retoc.exe`、`pbz_iostore_pack.exe` |
 | 游戏 Paks | `E:/SteamLibrary/steamapps/common/PBZ/ProjectPBZ/Content/Paks` |
 | usmap | `E:/SteamLibrary/steamapps/common/PBZ/ProjectPBZ-5.7.4-301524-full.usmap` |
 | AES | `0x4BC8A51E5381325073F2BC7D4E3089CD557C4E9B7D453901C2C795518867E01D` |
@@ -18,7 +23,9 @@
 | 可用 Rust | `C:/Users/12797/.cargo/bin/cargo.exe` |
 | 可用 UE 编辑器 | `S:/Epic Games/UE_5.6`，不是 PBZ 的 UE 5.7 环境 |
 
-CUE4Parse 缓存路径只是本次发现的可用副本，可能被清理。脚本要求显式传入 `-CueLib`，使用前检查 `CUE4Parse.dll`、`CUE4Parse-Conversion.dll` 及其依赖。需要长期整理工具时可另建工作区 `Tools`，不能假定该目录已经安装。复用 NTE 目录中的通用 DLL 不代表使用 NTE 的 `EGame`、usmap 或资产路径。
+CUE4Parse 缓存路径是历史提取流程使用过的副本，可能被清理；日常任务改用固定打包器内的依赖。复用 NTE 目录中的通用 DLL 不代表使用 NTE 的 `EGame`、usmap 或资产路径。
+
+2026-10-31 已将上述打包相关依赖从缓存复制到固定 `Packer`，日常打包和提取使用该部署，不再依赖 NTE 临时缓存或重新构建。旧工具路径仅供历史任务追溯。部署版本及各文件摘要见 `Packer/deployment.json`，游戏路径和 AES 见 `Packer/config.json`；环境有误时报告具体缺失或不匹配，不自动安装、重建。打包输出仅三件套，所有诊断存 `.tmp`。
 
 ## 目录
 

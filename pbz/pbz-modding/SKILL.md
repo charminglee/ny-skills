@@ -29,6 +29,10 @@ Exports/<资源名>/
 
 ## 按任务选择路径
 
+**用户要求打包时，直接用系统 `pwsh` 运行已部署的 `E:/PbzMod/Packer/Pack.ps1`，不复制 PowerShell 运行时。禁止在常规任务中重新 clone、Cargo build、安装依赖或重建环境。** `Pack.ps1 -CheckEnvironment` 检查固定工具链；缺失或摘要不匹配时报告具体依赖，不自动重建。调用、输入清单和回读步骤见 [cooked-repack.md](references/cooked-repack.md)。
+
+打包成品目录只交付同名 `.pak/.utoc/.ucas` 三件套。源文件快照、日志、清单、校验和及验证报告全部保留在项目 `.tmp`，不额外复制到成品目录。原生模型/纹理写回仍须先完成，再调用打包器；不能把 Blend/PNG 直接当作 Cooked 数据。
+
 1. **解包、导出或重新生成原版模型**：读 [export-blender.md](references/export-blender.md)。从实际包读取引用，导出网格与材质依赖，再建立完整场景及独立部件，重新打开检查。
 2. **原版回包验证或已提供 Cooked 产物**：读 [cooked-repack.md](references/cooked-repack.md)。使用修改白名单构建新容器索引，输出三件套并回读。
 3. **用户修改了 `.blend`**：先确认准确文件和目标包，建立几何/引用差异。原版重新封装成功不代表任意 Blender 编辑已可写回。
@@ -51,10 +55,12 @@ Exports/<资源名>/
 - 导出：完整场景可打开，各部件只含目标网格及其骨架；外部贴图相对路径有效；重复材质槽与源引用可追溯；没有生成 FBX。
 - 原版回包：新包数据块、完整 LOD 模型和贴图像素与原版匹配。
 - 修改回包：包内只有白名单资源；回读确实来自新容器；可见几何与修改文件一致；未修改的 UV、颜色、权重和各类引用保留；其余 LOD 按实际改动核对。
-- 成品复制后核对 SHA-256，提供三件套、输入摘要和验证结果。未进行游戏运行测试时明确说明。
+- 成品复制后核对 SHA-256，只输出三件套；输入摘要和验证记录保存在 `.tmp`。未进行游戏运行测试时明确说明。
 
 ## 辅助工具
 
-- [cue_assets.ps1](scripts/cue_assets.ps1)：用明确提供的 CUE4Parse 库执行目录清单、对象检查和原始 Zen 数据块提取；配置和运行结果写入工作区 `.tmp`。
-- [build_packer.ps1](scripts/build_packer.ps1)：在 `.tmp` 构建固定上游版本的 IoStore 封装工具，不改动共享工具或上游源码。
+- `E:/PbzMod/Packer/Pack.ps1`：常规打包入口，固定工具链、输入摘要检查、封装、验证和独立挂载回读，成品仅三件套。
+- `E:/PbzMod/Packer/Invoke-Cue.ps1`：使用固定环境及预编译助手执行目录清单、对象检查和 Zen 提取。
+- [deploy_packer.ps1](scripts/deploy_packer.ps1)：部署维护入口，将已验证的现成程序、DLL 和映射复制到空的部署目录并预编译助手，使用系统 pwsh。普通打包不调用此脚本。
+- [build_packer.ps1](scripts/build_packer.ps1)：历史构建/维护工具，仅在用户明确要求重建工具链时使用，不是日常打包步骤。
 - [split_blends.py](scripts/split_blends.py)：从原版完整场景生成独立部件，并逐个回读核对模型数据和贴图路径；需先按导出流程在网格上记录 `UE_Source`。

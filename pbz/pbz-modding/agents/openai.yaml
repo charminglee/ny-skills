@@ -1,0 +1,4 @@
+interface:
+  display_name: "PBZ 模组制作"
+  short_description: "PBZ 资源解包、Blender 模型转换、原生删面写回与 IoStore 三件套打包"
+  default_prompt: "使用 $pbz-modding 完成 PBZ 资源导出、Blender 模型处理和模组三件套打包。"

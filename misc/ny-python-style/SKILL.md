@@ -1,9 +1,11 @@
 ---
 name: ny-python-style
-description: 全局 Python 代码风格指南，编写任何 Python 代码时都应使用本技能。
+description: 全局 Python 代码风格指南，编写任何正式 Python 代码时都应使用本技能，临时脚本、测试脚本无需遵循。
 ---
 
 # 全局 Python 代码风格指南
+
+全局 Python 代码风格指南，编写任何正式 Python 代码时都应使用本技能，临时脚本、测试脚本无需遵循。
 
 ## 命名风格
 

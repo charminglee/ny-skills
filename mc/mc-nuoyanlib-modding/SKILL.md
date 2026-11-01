@@ -40,11 +40,11 @@ description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，�
 - 行为包 `bp` 内代码必须使用 Python 2.7 语法，禁用 Python 3 语法；建项、清理和验证等开发脚本可以使用 Python 3 。
 - 客户端和服务端分别通过 `nuoyanlib.client` / `nuoyanlib.server` 入口导入为 `nyl`，优先调用 `nyl.<func_name>`。两侧入口已包含通用接口 `nuoyanlib.common` 。
 - 功能放入 `modules/<功能>/`；创建新功能模块时，完整复制 `modules/__template/` 作为模板，然后在 `common/constant.py` 的 `ClientModule` / `ServerModule` 中注册模块。
-- 方块、实体、物品、粒子、配方、结构特征等 json 的命名空间统一使用： `nuoyan` 。
-- 行为包/资源包内 json 文件、资源文件需统一放入以项目名称命名的子目录内，如 `bp/entities/cloud_flight/` 。
+- 默认情况下，方块、实体、物品、粒子、配方、结构特征等 JSON 的命名空间统一使用： `nuoyan` ，如项目已有约定，则遵从项目约定。
+- 行为包/资源包内 JSON 文件、资源文件需统一放入以项目名称命名的子目录内，如 `bp/entities/cloud_flight/` 。
 - 行为包/资源包下的目录名有特定含义，不得随意命名，网易版部分命名与原版不同，具体以 Demo 为准。
 - 事件参数获取使用 `args.arg_name` 而不是 `args['arg_name']` 。
-- 所有 json 需格式化输出，使用 4 个空格缩进。
+- 所有 JSON 需格式化输出，使用 4 个空格缩进。
 
 禁止：
 

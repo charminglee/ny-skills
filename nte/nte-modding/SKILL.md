@@ -25,7 +25,7 @@ description: 异环（Neverness to Everness / NTE，国服，虚幻引擎 5.6）
 | 项 | 值 |
 | --- | --- |
 | 游戏 | 异环 Neverness to Everness（NTE），国服 CN，版本随热更（交付说明按"CN NTE x.x"标注目标版本） |
-| 引擎 | Unreal Engine **5.6**——retoc 一律 `--version UE5_6`；本地引擎 5.6.1 备用于核对：`E:\NteMod\Tools\NteUe` |
+| 引擎 | Unreal Engine **5.6**——retoc 一律 `--version UE5_6`；本地引擎 5.6.1 备用于核对：`E:\NteMod\UE_5.6` |
 | 游戏根 | `E:\Neverness To Everness\Client\WindowsNoEditor\HT\` |
 | 容器目录 | `...\HT\Content\Paks`（基础）、`PatchPaks`、`TagPatchPaks`（热更）；新皮肤等新资源只存在于热更容器里，只扫 Paks 会漏 |
 | global 容器 | `global.ucas` + `global.utoc` **未加密**，是解析导入名/做对照提取的主存储 |
@@ -120,7 +120,7 @@ KEY=0x370E80AA7DCA90A938A4D85013C5A16129AB3079902532B3325CA5B72B740FC7
 | --- | --- |
 | `Tools/retoc/` | retoc.exe + oo2core_9_win64.dll + scriptobjects.bin（三者在同一目录才完整） |
 | `Tools/UAssetGUI.exe` | uasset GUI 编辑器 |
-| `Tools/NteUe/` | UE 5.6.1 本地引擎（核对版本/结构用） |
+| `UE_5.6/` | UE 5.6.1 本地引擎（核对版本/结构用） |
 | `Scripts/<项目名>/` | 每个模组/项目的脚本与中间产物（blackbird_vfx、heiyu_awakening 等）；补丁源码树在 `<项目>/work/out/HT/Content/...` |
 | `Projects/` | 仅存用户自己的 UE 工程（各角色 UI 等）与 Template 结构模板；**模组流程不往这里写** |
 | `Backups/<角色名-类型-名称>/` | 唯一交付终点，中文命名（目录与容器三件套同名 + `_P` 后缀） |

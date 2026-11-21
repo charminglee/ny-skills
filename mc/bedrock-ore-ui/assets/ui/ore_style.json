@@ -1,0 +1,271 @@
+{
+  "namespace": "ore_style",
+  "face": {
+    "type": "image",
+    "keep_ratio": false,
+    "size": ["100%", "100%"],
+    "texture": "$ore_texture",
+    "nineslice_size": "$slice",
+    "$slice|default": [2, 2, 2, 4],
+    "$ore_label_offset|default": [0, -1],
+    "controls": [
+      {
+        "caption": {
+          "type": "label",
+          "text": "$ore_label",
+          "color": "$ore_text_color",
+          "font_type": "unicode",
+          "shadow": false,
+          "layer": 1,
+          "offset": "$ore_label_offset"
+        }
+      }
+    ]
+  },
+  "button@common.button": {
+    "size": [70, 21],
+    "$ore_label|default": "",
+    "$ore_text_color|default": [0, 0, 0],
+    "$ore_normal|default": "textures/ui/ore_style/buttons/button_neutral_normal",
+    "$ore_hover|default": "textures/ui/ore_style/buttons/button_neutral_hover",
+    "$ore_pressed|default": "textures/ui/ore_style/buttons/button_neutral_pressed",
+    "default_control": "normal",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "locked_control": "locked",
+    "controls": [
+      {
+        "normal@ore_style.face": {
+          "$ore_texture": "$ore_normal"
+        }
+      },
+      {
+        "hover@ore_style.face": {
+          "$ore_texture": "$ore_hover"
+        }
+      },
+      {
+        "pressed@ore_style.face": {
+          "$ore_texture": "$ore_pressed",
+          "$slice": [2, 4, 2, 2],
+          "$ore_label_offset": [0, 1]
+        }
+      },
+      {
+        "locked@ore_style.face": {
+          "$ore_texture": "textures/ui/ore_style/buttons/button_neutral_disabled",
+          "$ore_text_color": [0.2, 0.2, 0.2]
+        }
+      }
+    ]
+  },
+  "primary_button@ore_style.button": {
+    "$ore_text_color": [1, 1, 1],
+    "$ore_normal": "textures/ui/ore_style/buttons/button_primary_normal",
+    "$ore_hover": "textures/ui/ore_style/buttons/button_primary_hover",
+    "$ore_pressed": "textures/ui/ore_style/buttons/button_primary_pressed"
+  },
+  "info_button@ore_style.button": {
+    "$ore_text_color": [1, 1, 1],
+    "$ore_normal": "textures/ui/ore_style/buttons/button_info_normal",
+    "$ore_hover": "textures/ui/ore_style/buttons/button_info_hover",
+    "$ore_pressed": "textures/ui/ore_style/buttons/button_info_pressed"
+  },
+  "danger_button@ore_style.button": {
+    "$ore_text_color": [1, 1, 1],
+    "$ore_normal": "textures/ui/ore_style/buttons/button_danger_normal",
+    "$ore_hover": "textures/ui/ore_style/buttons/button_danger_hover",
+    "$ore_pressed": "textures/ui/ore_style/buttons/button_danger_pressed"
+  },
+  "segment": {
+    "type": "panel",
+    "size": ["100%", "100%"],
+    "controls": [
+      {
+        "choose@ore_style.button": {
+          "size": ["100%", "100%"]
+        }
+      },
+      {
+        "selected": {
+          "type": "panel",
+          "size": ["100%", "100%"],
+          "layer": 8,
+          "bindings": [
+            {
+              "binding_name": "$selected_binding",
+              "binding_name_override": "#visible"
+            }
+          ],
+          "controls": [
+            {
+              "clearance": {
+                "type": "image",
+                "texture": "textures/ui/ore_style/surfaces/surface_solid_white",
+                "keep_ratio": false,
+                "size": ["100%", "100%"],
+                "color": "$ore_row_color"
+              }
+            },
+            {
+              "sunken@ore_style.face": {
+                "$ore_texture": "textures/ui/ore_style/buttons/button_primary_pressed",
+                "$slice": [2, 4, 2, 2],
+                "$ore_label_offset": [0, 1],
+                "$ore_text_color": [1, 1, 1],
+                "layer": 1
+              }
+            },
+            {
+              "underline": {
+                "type": "image",
+                "texture": "textures/ui/ore_style/surfaces/surface_solid_white",
+                "keep_ratio": false,
+                "size": ["28%", 1],
+                "color": [1, 1, 1],
+                "layer": 3,
+                "anchor_from": "bottom_middle",
+                "anchor_to": "bottom_middle",
+                "offset": [0, -1]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "$ore_row_color|default": [0.2824, 0.2863, 0.2902]
+  },
+  "track": {
+    "type": "image",
+    "keep_ratio": false,
+    "texture": "textures/ui/ore_style/sliders/slider_track_empty",
+    "size": ["100%", "100%"],
+    "nineslice_size": [2, 2, 2, 2]
+  },
+  "fill": {
+    "type": "image",
+    "keep_ratio": false,
+    "texture": "textures/ui/ore_style/sliders/slider_track_filled",
+    "size": ["100%", "100%"],
+    "nineslice_size": [2, 2, 2, 2]
+  },
+  "empty_slider_part": {
+    "type": "panel",
+    "size": ["100%", "100%"]
+  },
+  "slider_view": {
+    "type": "panel",
+    "size": ["100%", "100%"],
+    "controls": [
+      {
+        "track@ore_style.track": {}
+      },
+      {
+        "fill@ore_style.fill": {
+          "size": ["50%", "100%"],
+          "anchor_from": "left_middle",
+          "anchor_to": "left_middle",
+          "layer": 1
+        }
+      },
+      {
+        "ticks@ore_style.slider_ticks": {
+          "ignored": "$continuous",
+          "layer": 2
+        }
+      },
+      {
+        "thumb": {
+          "type": "image",
+          "texture": "$thumb_texture",
+          "keep_ratio": false,
+          "nineslice_size": [2, 2, 2, 4],
+          "size": [16, 16],
+          "anchor_from": "left_middle",
+          "anchor_to": "center",
+          "offset": ["50%", 0],
+          "layer": 4
+        }
+      }
+    ]
+  },
+  "slider_ticks": {
+    "type": "panel",
+    "size": ["100%", "100%"],
+    "controls": [
+      {
+        "tick_25": {
+          "type": "image",
+          "texture": "textures/ui/ore_style/surfaces/surface_solid_white",
+          "keep_ratio": false,
+          "color": [0.1176, 0.1176, 0.1176],
+          "size": [1, "100%"],
+          "anchor_from": "left_middle",
+          "anchor_to": "center",
+          "offset": ["25%", 0]
+        }
+      },
+      {
+        "tick_50": {
+          "type": "image",
+          "texture": "textures/ui/ore_style/surfaces/surface_solid_white",
+          "keep_ratio": false,
+          "color": [0.1176, 0.1176, 0.1176],
+          "size": [1, "100%"],
+          "anchor_from": "left_middle",
+          "anchor_to": "center",
+          "offset": ["50%", 0]
+        }
+      },
+      {
+        "tick_75": {
+          "type": "image",
+          "texture": "textures/ui/ore_style/surfaces/surface_solid_white",
+          "keep_ratio": false,
+          "color": [0.1176, 0.1176, 0.1176],
+          "size": [1, "100%"],
+          "anchor_from": "left_middle",
+          "anchor_to": "center",
+          "offset": ["75%", 0]
+        }
+      }
+    ]
+  },
+  "damped_slider@common.slider": {
+    "$continuous|default": true,
+    "$slider_box_size": [16, 16],
+    "$slider_box_layout": "ore_style.empty_slider_part",
+    "$slider_box_hover_layout": "ore_style.empty_slider_part",
+    "$slider_box_indent_layout": "ore_style.empty_slider_part",
+    "$slider_box_locked_layout": "ore_style.empty_slider_part",
+    "factory": {
+      "name": "slider_step_factory",
+      "control_ids": {
+        "slider_step": "@ore_style.empty_slider_part",
+        "slider_step_hover": "@ore_style.empty_slider_part",
+        "slider_step_progress": "@ore_style.empty_slider_part",
+        "slider_step_progress_hover": "@ore_style.empty_slider_part"
+      }
+    },
+    "controls": [
+      {
+        "slider_box@common.slider_box": {
+          "propagate_alpha": true,
+          "alpha": 0,
+          "$slider_track_button": "$slider_name"
+        }
+      },
+      {
+        "slider_bar_default@ore_style.slider_view": {
+          "$thumb_texture": "textures/ui/ore_style/buttons/button_neutral_normal"
+        }
+      },
+      {
+        "slider_bar_hover@ore_style.slider_view": {
+          "$thumb_texture": "textures/ui/ore_style/buttons/button_neutral_hover",
+          "visible": false
+        }
+      }
+    ]
+  }
+}

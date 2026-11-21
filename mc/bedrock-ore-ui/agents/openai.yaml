@@ -1,0 +1,6 @@
+interface:
+  display_name: "基岩版 Ore UI 风格"
+  short_description: "按约定的 Ore UI 色板、像素边框与交互状态制作模组界面"
+  default_prompt: "使用 $bedrock-ore-ui 把当前界面做成 OreUI 风格。"
+policy:
+  allow_implicit_invocation: true

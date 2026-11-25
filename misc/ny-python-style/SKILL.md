@@ -95,6 +95,14 @@ description: 全局 Python 代码风格指南，编写任何正式 Python 代码
       + part3
   )
   ```
+- 较长的推导式的换行风格：
+  ``````python
+  [
+      pack_render_word(codes[i:i + 2], SMOKE_SAMPLE_BASE) 
+      for i in range(0, SMOKE_SAMPLES, 2)
+      if i > 0
+  ]
+  ``````
 
 ## 杂项
 

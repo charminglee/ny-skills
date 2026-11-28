@@ -53,6 +53,7 @@ description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，�
 
 - 使用 `@nyl.event` 装饰器进行事件监听，函数名与事件名一致；继承 `BaseClient` / `BaseServer` 后，编写一个与引擎事件同名的函数即可使用该事件，无需装饰器；自定义事件需注册到 `common.constant` 的 `ClientEvent` / `ServerEvent` 枚举中；使用 `args.<arg_name>` 获取事件参数。
 - 自定义枚举通过 `nyl.IntEnum` / `nyl.StrEnum` 创建，枚举值命名使用大写字母和下划线，优先使用 `auto()` 生成枚举值。
+- UI 类的属性初始化写在 `__init__()` 方法而不是 `Create()` 。
 
 ## 测试
 

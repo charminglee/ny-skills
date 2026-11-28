@@ -47,6 +47,7 @@ description: 使用模板创建基于 nuoyanlib 的网易基岩版 MC 模组，�
 **禁止** ：
 
 - 在 Python 代码中使用 unicode 字符串。
+- 使用 `namedtuple` 。
 
 ## 代码风格
 
